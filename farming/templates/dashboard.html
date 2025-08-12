@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Precision Farming</title>
+</head>
+<body>
+    <h1>Precision Farming Dashboard</h1>
+    <p>Soil Moisture:{{data.soil_moisture}}</p>
+    <p>Temprature:{{data.temprature}} °C</p>
+    <p>Humidity:{{data.humidity}} %</p>
+    <p>Rainfall:{{data.rain}} mm</p>
+    <h3>Irrigation Needed:
+    {% if data.irrigation_needed %}
+    Yes
+    {% else %}
+    No
+    {% endif %}</h3>
+</body>
+</html>

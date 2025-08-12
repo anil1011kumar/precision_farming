@@ -1,0 +1,1 @@
+web: gunicorn precision_farming.wsgi

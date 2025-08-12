@@ -1,0 +1,34 @@
+<p>Welcome,
+{{ request.user.username }} | <a href="{% url 'logout' %}">Logout</a>
+</p>
+<h2>Farmer Sensor Input</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+
+{% if result %}
+    <h3>Irrigation Needed:
+{{ result }}</h3>
+{% endif %}
+<table border="1">
+  <tr>
+    <th>Temprature</th>
+    <th>Humidity</th>
+    <th>Irrigation</th>
+    <th>Time</th>
+   </tr>
+   {% for entry in recent_data %}
+    <tr>
+      <td>{{ entry.temprature }}</td>
+      <td>{{ entry.humidity }}</td>
+      <td>{% if entry.irrigation_needed %}Yes{% else %}No{% endif %}</td>
+      <td>{{ entry.timestamp }}</td>
+    </tr>
+   {% endfor %}
+
+</table>
+
+
+

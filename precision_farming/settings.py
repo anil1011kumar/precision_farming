@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from decouple import config
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG',default=False,cast=bool)
+DEBUG = os.environ.get('DEBUG','False') == 'True'
 
-ALLOWED_HOSTS = config('ALLOWED_HOST').split(',')
+ALLOWED_HOSTS = ['precision-farming-hnp9.onrender.com']
 
 LOGIN_REDIRECT_URL = '/farmer/'
 
@@ -82,17 +83,7 @@ WSGI_APPLICATION = 'precision_farming.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE':'django.db.backends.mysql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT'),
-        'OPTIONS':{
-            'init_command':"SET sql_mode = 'STRICT_TRANS_TABLE'",
-        },
-    }
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'), conn_max_age = 600, ssl_require = True)
 }
 
 
